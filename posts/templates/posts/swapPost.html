@@ -1,0 +1,19 @@
+{% extends "website/base.html" %}
+{% block content %}
+{{swap_shift}}
+{% for schedule in schedules %}
+    <p>
+        <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample2" role="button" aria-expanded="false" aria-controls="collapseExample2">
+        {{schedule.profile}}
+        {{schedule}}
+        </a>
+    </p>
+    <div class="collapse" id="collapseExample2">
+        <div class="card card-body">
+            {% for shift in schedule.shift_set.all %}
+                <a class="btn btn-primary" href="{% url 'swap-shift' swap_shift.pk shift.pk %}" role="button">{{shift}}</a>
+            {% endfor %}
+        </div>
+    </div>
+{% endfor %}
+{% endblock %}

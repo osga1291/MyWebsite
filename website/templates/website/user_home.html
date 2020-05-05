@@ -1,0 +1,12 @@
+{% extends "website/base.html" %}
+{% block content %}
+{% for schedule in schedules %}
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <h2> <a class = "mr-2" href="{% url 'schedule-detail' pk=schedule.pk %}" > {{schedule}}</a></h2>
+            </div>
+        </div>
+    </article>
+{% endfor %}
+{% endblock content %}
