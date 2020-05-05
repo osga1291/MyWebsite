@@ -1,0 +1,12 @@
+{% extends "website/base.html" %}
+{% block content %}
+<h1>Search Results</h1>
+
+<ul>
+  {% for profile in shift_list %}
+    <li>
+      {{ profile }}
+    </li>
+  {% endfor %}
+</ul>
+{% endblock %}
