@@ -22,8 +22,6 @@ class scheduleListView(LoginRequiredMixin,ListView):
 class scheduleDetailView(DetailView):
     model = schedule
 
-    #def get_queryset(self):
-     #   obj = super(scheduleDetailView, self).get_object(pk)
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(scheduleDetailView, self).get_context_data(**kwargs)

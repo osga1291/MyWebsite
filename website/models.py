@@ -5,19 +5,20 @@ import datetime
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 #from users.models import Roles
+class mainSchedule(models.Model):
+    date_started = models.DateField()
+    date_end = models.DateField() 
 
 class schedule(models.Model):
-    scheduleID = models.AutoField(primary_key = True)
-    person = models.ForeignKey(User ,on_delete = models.CASCADE)
-    date_started = models.DateField()
-    date_end = models.DateField()
+    #scheduleID = models.AutoField(primary_key = True)
+    user = models.ForeignKey(User ,on_delete = models.CASCADE)
     hours = models.PositiveIntegerField(default = 0)
-    profile = models.ForeignKey('users.Profile' , on_delete = models.CASCADE, null = True , blank = True)
+    main_sched = models.ForeignKey(mainSchedule , on_delete = models.CASCADE)
 
 
     def __str__(self):
-        a = self.date_started.strftime("%m/%d/%Y")
-        b = self.date_end.strftime("%m/%d/%Y")
+        a = self.main_sched.date_started.strftime("%m/%d/%Y")
+        b = self.main_sched.date_end.strftime("%m/%d/%Y")
         return a + ' - '+ b
 
     def get_absolute_url(self):
@@ -30,12 +31,12 @@ class schedule(models.Model):
 
 class shift(models.Model):
     
-    shiftID = models.AutoField(primary_key = True)
+    #shiftID = models.AutoField(primary_key = True)
     #person = models.ForeignKey(User, on_delete = models.CASCADE)
     day = models.DateField(u'Day of the event', help_text=u'Day of the event')
     start_time = models.TimeField(u'Starting time', help_text=u'Starting time')
     end_time = models.TimeField(u'Final time', help_text=u'Final time')
-    position = models.ForeignKey('users.Roles', on_delete = models.CASCADE)
+    role = models.ForeignKey('users.Roles', on_delete = models.CASCADE)
     schedule = models.ForeignKey(schedule, on_delete = models.CASCADE)
     #def check_role(self , position , ):
     #    wrong_role = False
@@ -48,7 +49,7 @@ class shift(models.Model):
         c = self.end_time.strftime("%H:%M:%S")
         d = self.position
         return a + ' : ' + b + ' - ' + c +  ' : ' + str( d)
-        
+    '''    
     def check_overlap(self,start_time, end_time, fixed_start, fixed_end):
         overlap = False
         if(start_time == fixed_start or end_time == fixed_end):
@@ -72,4 +73,4 @@ class shift(models.Model):
 
 
     #shifts = models.ForeignKey(shift, on_delete = models.SET_NULL, null = True)
-
+'''

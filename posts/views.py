@@ -7,7 +7,7 @@ from django.views.generic import (
     CreateView
 )
 from . models import post
-class postSentListView(ListView):
+class postSentListView(LoginRequiredMixin,ListView):
     model = post
     template_name = 'posts/post.html'
     context_object_name = 'posts'
@@ -18,7 +18,7 @@ class postSentListView(ListView):
         posts_sent = post_list.order_by('-date_posted')
         return posts_sent
 
-class postReceivedListView(ListView):
+class postReceivedListView(LoginRequiredMixin,ListView):
     model = post
     template_name = 'posts/post.html'
     context_object_name = 'posts'
