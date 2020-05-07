@@ -8,7 +8,7 @@ from django.db.models import Q
 from .models import schedule ,shift
 from users.views import Profile
 from datetime import datetime
-class scheduleListView(ListView):
+class scheduleListView(LoginRequiredMixin,ListView):
     model = schedule
     template_name = 'website/home.html'
     context_object_name = 'schedules'
