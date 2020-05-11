@@ -15,9 +15,9 @@ class scheduleListView(LoginRequiredMixin,ListView):
 
     def get_queryset(self):
         user = self.request.user
-        schedule_list = schedule.objects.filter(person = user)
-        sched = schedule_list.order_by('-date_started')
-        return sched
+        schedule_list = schedule.objects.filter(user = user)
+        #sched = schedule_list.order_by('-date_started')
+        return schedule_list
 
 class scheduleDetailView(DetailView):
     model = schedule
@@ -25,7 +25,7 @@ class scheduleDetailView(DetailView):
     def get_context_data(self, **kwargs):
         user = self.request.user
         context = super(scheduleDetailView, self).get_context_data(**kwargs)
-        context['shifts'] = shift.objects.filter(schedule__person = user, schedule = self.kwargs.get('pk')).order_by('-day')
+        context['shifts'] = shift.objects.filter(schedule__user = user, schedule = self.kwargs.get('pk')).order_by('-day')
         return context
 
 class searchShiftListView(ListView):

@@ -1,9 +1,9 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 from django.utils import timezone
 from django.urls import reverse
 import datetime
-
+from users.models import User
 
 
 class post(models.Model):
@@ -24,8 +24,8 @@ class post(models.Model):
     recipient_shift = models.ForeignKey('website.shift', blank = True , related_name = 'recipient_shift' ,on_delete = models.CASCADE, null = True)
     recipient = models.ForeignKey(User, related_name = 'recipient' ,on_delete = models.CASCADE)
     comment = models.CharField(max_length = 100)
-    date_posted = models.DateTimeField()
-    status = models.PositiveSmallIntegerField(choices = STATUS, default = 1)
+    date_posted = models.DateTimeField(default = timezone.now)
+    status = models.PositiveSmallIntegerField(choices = STATUS_CHOICES, default = 1)
     is_read = models.BooleanField(default = False)
     
     def __str__(self):

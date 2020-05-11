@@ -1,16 +1,19 @@
 from __future__ import unicode_literals
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
 import datetime 
 from django.urls import reverse
 from django.core.exceptions import ValidationError
+from users.models import User
 #from users.models import Roles
 class mainSchedule(models.Model):
     date_started = models.DateField()
     date_end = models.DateField() 
-
+    def __str__(self):
+        a = self.date_started.strftime("%m/%d/%Y")
+        b = self.date_end.strftime("%m/%d/%Y")
+        return a + '-' + b
 class schedule(models.Model):
-    #scheduleID = models.AutoField(primary_key = True)
     user = models.ForeignKey(User ,on_delete = models.CASCADE)
     hours = models.PositiveIntegerField(default = 0)
     main_sched = models.ForeignKey(mainSchedule , on_delete = models.CASCADE)
@@ -19,7 +22,7 @@ class schedule(models.Model):
     def __str__(self):
         a = self.main_sched.date_started.strftime("%m/%d/%Y")
         b = self.main_sched.date_end.strftime("%m/%d/%Y")
-        return a + ' - '+ b
+        return a + ' - '+ b + '-' + str(self.user.profile.name)
 
     def get_absolute_url(self):
         return reverse('schedule-detail', kwargs={'pk': self.pk})
@@ -45,9 +48,9 @@ class shift(models.Model):
         # return wrong_role
     def __str__(self):
         a = self.day.strftime("%m/%d/%Y")
-        b = self.start_time.strftime("%H:%M:%S")
-        c = self.end_time.strftime("%H:%M:%S")
-        d = self.position
+        b = self.start_time.strftime('%I:%M %p')
+        c = self.end_time.strftime('%I:%M %p')
+        d = self.role
         return a + ' : ' + b + ' - ' + c +  ' : ' + str( d)
     '''    
     def check_overlap(self,start_time, end_time, fixed_start, fixed_end):

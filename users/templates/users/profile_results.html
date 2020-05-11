@@ -1,12 +1,21 @@
 {% extends "website/base.html" %}
 {% block content %}
-<h1>Search Results</h1>
+  
+  <form action="{% url 'profile-search' %}" method="get"> <input name="q" type="text" placeholder="Search...">
+  </form>
+  
+  <h1>Search Results</h1>
 
-<ul>
-  {% for city in object_list %}
-    <li>
-      {{ city.name }}, {{ city.state }}
-    </li>
-  {% endfor %}
-</ul>
+  <ul>
+    {% if not object_list %}
+      <p> No profiles found. </p>
+    {% else %}
+      {% for profile in object_list %}
+        <li>
+          <h2> <a class = "mr-2" href="{% url 'profile' profile.pk %}" > {{profile}}</a></h2>
+        </li>
+
+      {% endfor %}
+      {% endif %}
+    </ul>
 {% endblock %}

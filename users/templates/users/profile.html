@@ -1,11 +1,11 @@
 {% extends "website/base.html" %}
 {% block content %}
-{{ user.profile.name }}
+{{ profile.name }}
 {% for role in user.profile.roles.all %}
 <article class="media content-section">
     <div class="media-body">
         <div class="article-metadata">
-            <h2> <a class = "mr-2" href="#" > {{role}}</a></h2>    
+            <h2> <a class = "mr-2" href="#" > {{profile.get_roles}}</a></h2>    
         </div>
     </div>
 </article>

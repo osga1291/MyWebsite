@@ -26,8 +26,10 @@ SECRET_KEY = 'o_#g*rit8bfzqh5cw*#79_0e+5$l((ludcrzs9tmobr0x-0@-$'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
-
+TIME_INPUT_FORMATS = [  
+    '%I:%M %p',
+]
+AUTH_USER_MODEL = 'users.User'
 # Application definition
 #AUTH_USER_MODEL = 'users.User'
 INSTALLED_APPS = [
@@ -40,7 +42,8 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'website.apps.WebsiteConfig' ,
     'posts.apps.PostsConfig',
-    'crispy_forms'
+    'crispy_forms',
+    'phonenumber_field'
 
 ]
 
