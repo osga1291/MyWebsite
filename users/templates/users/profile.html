@@ -1,13 +1,39 @@
 {% extends "website/base.html" %}
 {% block content %}
-{{ profile.name }}
-{% for role in user.profile.roles.all %}
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <h2> <a class = "mr-2" href="#" > {{profile.get_roles}}</a></h2>    
+
+    <div class="card" style="width:800px">>
+        <img class="card-img-top" src="..." alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{profile.name}}</h5>
+            <p class="card-text">I have been working here for 5 years and now my stuff.</p>
+        </div>
+        <div class="row">
+            <div class="col-4">
+                <div class="list-group" id="list-tab" role="tablist">
+                    <a class="list-group-item list-group-item-action active" id="list-home-list" data-toggle="list" href="#list-home" role="tab" aria-controls="home">What I Know</a>
+                    <a class="list-group-item list-group-item-action" id="list-profile-list" data-toggle="list" href="#list-profile" role="tab" aria-controls="profile">Contact Me</a>
+                    <a class="list-group-item list-group-item-action" id="list-messages-list" data-toggle="list" href="#list-messages" role="tab" aria-controls="messages">Store</a>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="tab-content" id="nav-tabContent">
+                    <div class="tab-pane fade show active" id="list-home" role="tabpanel" aria-labelledby="list-home-list">
+                        {% for role in profile.roles.all %}  
+                            <h2> <a class = "mr-2" href="#" > {{role}}</a></h2>
+                        {% endfor %}
+                    </div>
+                    <div class="tab-pane fade" id="list-profile" role="tabpanel" aria-labelledby="list-profile-list">
+                        <a href="#" class="card-link">Email:{{profile.email}}</a>
+                        <a href="#" class="card-link">Phone Number: {{profile.phone_num}}</a>
+                    </div>
+                    <div class="tab-pane fade" id="list-messages" role="tabpanel" aria-labelledby="list-messages-list">...</div>
+                </div>
+            </div>
         </div>
     </div>
-</article>
-{% endfor %}
+    {% if user.profile.name == profile.name %}
+        <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'profile-update' %}">Update</a>
+        </div>
+    {% endif %}
 {% endblock content %}

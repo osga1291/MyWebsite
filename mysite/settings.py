@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'website.apps.WebsiteConfig' ,
     'posts.apps.PostsConfig',
     'crispy_forms',
-    'phonenumber_field'
+    'phonenumber_field',
 
 ]
 
