@@ -28,26 +28,10 @@ class scheduleDetailView(DetailView):
         context['shifts'] = shift.objects.filter(schedule__user = user, schedule = self.kwargs.get('pk')).order_by('-day')
         return context
 
-class searchShiftListView(ListView):
-    model = shift
-    template_name = 'website/search_shift.html'
-    context_object_name = 'shift_list'
-
-    def get_queryset(self):
-        query = self.request.GET.get('q')
-        newlist = query.split(':')
-        date = str(newlist[0]).replace(" ","")
-        date_format = date.split('/')
-        day = date_format[1]
-        year = date_format[2]
-        month = date_format[0]
-        date_format[0],date_format[1],date_format[2] = year, month , day
-        date = '-'.join(date_format)
-        date = datetime.strptime(date, '%Y-%m-%d')
-        role = str(newlist[-1]).replace(" ","")
-        prof_list = Profile.objects.filter(Q(roles__name__contains= role) & ~Q(schedule__shift__day__contains = date))
-        return prof_list
-
+class shiftDetailView(DetailView):
+    model = shift      
+    template_name = 'website/shift_detail.html'
+    context_object_name = 'shift'
 
 def home(request):
     return render(request, 'website/home.html')

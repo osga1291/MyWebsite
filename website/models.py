@@ -3,6 +3,7 @@ from django.db import models
 #from django.contrib.auth.models import User
 import datetime 
 from django.urls import reverse
+from django.db.models import Q
 from django.core.exceptions import ValidationError
 from users.models import User
 #from users.models import Roles
@@ -52,6 +53,21 @@ class shift(models.Model):
         c = self.end_time.strftime('%I:%M %p')
         d = self.role
         return a + ' : ' + b + ' - ' + c +  ' : ' + str( d)
+    
+    def check_cover(self):
+        curr_sched = self.schedule
+        options = User.objects.filter(Q(profile__roles__name__icontains = self.role) & ~Q(schedule__shift__day__icontains = self.day))
+        to_be_deleted = []
+        for user in options:
+            sched_check = user.schedule
+            if sched_check.hours > 40:
+                to_be_deleted.append(user.pk)
+            
+        options.filter(pk = to_be_deleted).delete()
+        print(options)
+        return options
+
+
     '''    
     def check_overlap(self,start_time, end_time, fixed_start, fixed_end):
         overlap = False

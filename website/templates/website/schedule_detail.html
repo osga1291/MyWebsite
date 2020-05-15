@@ -2,12 +2,12 @@
 {% block content %}
 <a class = "mr-2" href="#" > {{object}} </a>
 {% for shift in shifts %}
-<article class="media content-section">
-    <div class="media-body">
-        <div class="article-metadata">
-            <a class = "mr-2" href="#" > {{shift}} </a>
+    <article class="media content-section">
+        <div class="media-body">
+            <div class="article-metadata">
+                <h2> <a class = "mr-2" href="{% url 'shift-detail' schedule.pk shift.pk %}" > {{shift}}</a></h2>
+            </div>
         </div>
-    </div>
-</article>
+    </article>
 {% endfor %}
 {% endblock content %}

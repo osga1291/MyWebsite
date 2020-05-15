@@ -1,12 +1,15 @@
 {% extends "website/base.html" %}
 {% block content %}
-{% for shift in shifts %}
-    <article class="media content-section">
-        <div class="media-body">
-            <div class="article-metadata">
-                <a class = "mr-2" href="#" > {{schedule.person}}</a>
-            </div>
+    <p>
+    <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+        {{shift}}
+    </a>
+    </p>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            <button type="button" class="btn btn-primary btn-sm btn-block">Find Coverage </button>
+            <button type="button" class="btn btn-secondary btn-sm btn-block">Swap Shifts </button>
         </div>
-    </article>
-{% endfor %}
+    </div>
+
 {% endblock content %}
