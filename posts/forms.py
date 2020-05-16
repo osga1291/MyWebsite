@@ -12,12 +12,11 @@ class requestPost(forms.Form):
     comment = forms.CharField(max_length=100)
     def __init__(self,*args, **kwargs):
         shift_input = kwargs.pop('shift_instance', None)
-        options = shift_input.check_cover
+        options = shift_input.check_cover()
         super(requestPost,self).__init__(*args,**kwargs)
         #print(User.objects.filter(profile__roles__name = "Manager"))
         
-        print(options)
-        self.fields['recipient'].choices = options
+        self.fields['recipient'].queryset = options
         
 
 

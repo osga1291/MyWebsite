@@ -32,7 +32,7 @@ def register(request):
         form = UserRegisterForm()
     return render(request, 'users/register.html', {'form': form})
 
-#@login_required
+@login_required
 def profile(request):
     user = request.user
     if request.method == 'POST':
@@ -41,6 +41,7 @@ def profile(request):
                                    request.FILES,
                                    instance=request.user.profile)
         if u_form.is_valid() and p_form.is_valid():
+            roles = u_form.cleaned_data.get('roles')
             u_form.save()
             p_form.save()
             messages.success(request, f'Your account has been updated!')

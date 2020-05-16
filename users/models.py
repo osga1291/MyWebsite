@@ -24,10 +24,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     email = models.EmailField(max_length=70, unique = True)
     phone_num = PhoneNumberField(unique = True, blank = True)
-    
-    
-    def get_role(self):
-        return self.name
+
 
 
     def __str__(self):
@@ -36,5 +33,5 @@ class Profile(models.Model):
     def create_user_profile(sender, instance, created, **kwargs):
         if created:
             Profile.objects.create(user=instance)
-    post_save.connect(create_user_profile, sender = User)
+        post_save.connect(create_user_profile, sender = User)
 

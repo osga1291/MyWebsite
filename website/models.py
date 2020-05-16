@@ -55,18 +55,14 @@ class shift(models.Model):
         return a + ' : ' + b + ' - ' + c +  ' : ' + str( d)
     
     def check_cover(self):
-        curr_sched = self.schedule
-        options = User.objects.filter(Q(profile__roles__name__icontains = self.role) & ~Q(schedule__shift__day__icontains = self.day))
-        to_be_deleted = []
-        for user in options:
-            sched_check = user.schedule
-            if sched_check.hours > 40:
-                to_be_deleted.append(user.pk)
-            
-        options.filter(pk = to_be_deleted).delete()
-        print(options)
-        return options
+        options = schedule.objects.filter(Q(main_sched =  self.schedule.main_sched) & Q(hours__lt = 40))
+        options.filter(Q(user__profile__roles__name__icontains = self.role) & ~Q(shift__day = self.day))
+        result = User.objects.filter(schedule__in = options)
+        return result
 
+    def check_swap(self):
+        options = User.objects.filter(Q(user__profile__roles__name__icontains = self.role) & ~Q(shift__day = self.day)) 
+        return options
 
     '''    
     def check_overlap(self,start_time, end_time, fixed_start, fixed_end):
